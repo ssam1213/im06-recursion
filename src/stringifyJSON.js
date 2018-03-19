@@ -5,5 +5,27 @@
 
 var stringifyJSON = function(obj) {
   // your code goes here
-  console.log(obj);
+  var array = [];
+  if (typeof obj === 'number' || typeof obj === 'boolean') {
+    return '' + obj;
+  }
+  if (obj === null) {
+    return 'null';
+  }
+  if (typeof obj === 'string') {
+    return '"' + obj + '"';
+  }
+  if (Array.isArray(obj)) {
+    for (var i in obj)
+      array.push(stringifyJSON(obj[i]));
+    return "[" + array + "]";
+  }
+  if (typeof obj === "object") {
+    for(var key in obj) {
+      if(!(obj[key]===undefined || typeof obj[key] === 'function'))
+        array.push(stringifyJSON(key) + ":" + stringifyJSON(obj[key]));
+    }
+    return "{" + array + "}";
+  }
+
 };
